@@ -40,9 +40,21 @@ export default function Home() {
   };
 
   const nextCard = () => {
-    setShowAnswer(false);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
-    setUserAnswer("");
+    if (!showAnswer) {
+      setShowAnswer(true);
+      checkAnswer();
+  
+      // Automatically proceed to the next question after 1.5 seconds
+      setTimeout(() => {
+        setShowAnswer(false);
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+        setUserAnswer("");
+      }, 1500); // Adjust delay if needed
+    } else {
+      setShowAnswer(false);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+      setUserAnswer("");
+    }
   };
 
   const checkAnswer = () => {
@@ -101,10 +113,14 @@ export default function Home() {
             value={userAnswer}
             onChange={(e) => setUserAnswer(e.target.value)}
           />
-          <button onClick={handleShowAnswer}>
-            {showAnswer ? "Hide Answer" : "Show Answer"}
-          </button>
-          {showAnswer && <p className="answer">{flashcards[currentIndex]?.answer}</p>}
+          {showAnswer ? (
+            <>
+              <button onClick={nextCard}>Next Question</button>
+              <p className="answer">{flashcards[currentIndex]?.answer}</p>
+            </>
+          ) : (
+            <button onClick={handleShowAnswer}>Show Answer</button>
+          )}
           <p>Correct: {correctCount} | Incorrect: {incorrectCount}</p>
         </div>
       ) : (
