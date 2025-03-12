@@ -131,7 +131,7 @@ export default function Home() {
           </div>
 
           <div className="add-card-box">
-            <h3>Add Flashcard</h3>
+            <h3>Add Flashcard here</h3>
             <input
               type="text"
               placeholder="Question"
