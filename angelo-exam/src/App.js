@@ -16,6 +16,12 @@ export default function Home() {
   const [incorrectCount, setIncorrectCount] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.body.classList.toggle("dark-mode", !darkMode);
+  };
 
   const nextCard = () => {
     setShowAnswer(false);
@@ -49,6 +55,9 @@ export default function Home() {
 
   return (
     <div className="container">
+      <button onClick={toggleDarkMode}>
+        {darkMode ? "Light Mode" : "Dark Mode"}
+      </button>
       <div className="flashcard-box">
         <h2>{flashcards[currentIndex]?.question || "No Flashcards"}</h2>
         {showAnswer && <p className="answer">{flashcards[currentIndex]?.answer}</p>}
